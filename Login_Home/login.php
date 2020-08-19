@@ -1,3 +1,21 @@
+<?php
+     session_start();
+     if(isset($_POST["btnOK"]))
+     {
+       $_SESSION["userName"] = $_POST["txtUserName"];
+       if (trim($userName)!= "")
+       {
+          header("Location: index");
+          exit();
+       }
+     }
+
+
+
+
+
+
+?>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
