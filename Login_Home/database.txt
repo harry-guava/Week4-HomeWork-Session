@@ -1,0 +1,13 @@
+Create database login default character set utf8;
+
+use login;
+
+create table member
+(
+    memberId int auto_increment primary key,
+    userName varchar(30),
+    passWord varchar(30)
+);
+
+insert into member (userName,passWord) values
+('guava','0507'),('banana','1234');

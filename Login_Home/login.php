@@ -1,38 +1,61 @@
 <?php
+require("connect.php");
 session_start();
 if (isset($_POST["btnOK"]))
  {
   $_SESSION["userName"] = $_POST["txtUserName"];
-  if (trim($_SESSION["userName"] != "") )
-  {
-    if (isset($_SESSION["lastpage"])) 
-    {
-      header(sprintf("Location: %s", $_SESSION["lastpage"]));
-    } 
-    else 
-    {
-      header("Location:index.php");
-    }
-    exit();
-  }
-}
+  $_SESSION["passWord"] = $_POST["txtPassword"];
+  $sql = <<< compare
+  select userName,passWord from member;
+  compare;
+  $result = mysqli_query($link,$sql);
+  $row = mysqli_fetch_all($result);
+  var_dump($result);
+
+//     else
+//     {
+//              echo '<script language="javascript">';
+//              echo 'alert("請輸入正確的帳號或密碼")';
+//              echo '</script>'; 
+//     }
+//  }
+  // $userName = $_SESSION["userName"];
+  // $passWord = $_SESSION["passWord"];
+//   if (trim($_SESSION["userName"] != "") )
+//   {
+//    if (isset($_SESSION["lastpage"])) 
+//    {
+//       header(sprintf("Location: %s", $_SESSION["lastpage"]));
+//    } 
+//     else 
+//     {
+//      header("Location:index.php");
+//    }
+//     exit();
+//   }
+ }
 if(isset($_POST["btnHome"]))
 {
   header("Location: index.php");
   exit();
 }
+
 if(isset($_GET["logout"]))
 {
-  if($_SESSION["userName"]="Guest")
+  if($_SESSION["userName"]!="Guest")
   {
-    $_SESSION["login_time_stamp"] = time();
-    if($_SESSION["login_time_stamp"]>3)
-    header("Location:index.php");
+   
+    session_unset();
+    session_destroy();
+    header("location: index.php");
   
   }
 }
-
-
+ if(isset($_POST["btnAdd"]))
+ { 
+     mysqli_query($link,$sql);
+     header("location: add.php");
+ }
 ?>
 <html>
 
@@ -58,11 +81,15 @@ if(isset($_GET["logout"]))
         <td valign="baseline"><input type="password" name="txtPassword" id="txtPassword" /></td>
       </tr>
       <tr>
-        <td colspan="2" align="center" bgcolor="#CCCCCC"><input type="submit" name="btnOK" id="btnOK" value="登入" />
+        <td colspan="2" align="center" bgcolor="#CCCCCC">
+         
+          <input type="submit" name="btnOK" id="btnOK" value="登入" />
           <input type="reset" name="btnReset" id="btnReset" value="重設" />
           <input type="submit" name="btnHome" id="btnHome" value="回首頁" />
+          <input href = "addEmployee.php" name = "btnAdd" type="submit" value ="加入會員"/>
         </td>
       </tr>
+      
     </table>
   </form>
 </body>
