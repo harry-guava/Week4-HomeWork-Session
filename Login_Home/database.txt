@@ -5,9 +5,9 @@ use login;
 create table member
 (
     memberId int auto_increment primary key,
-    userName varchar(30),
-    passWord varchar(30)
-);
+    userName varchar(30) NOT NULL
+    paswd varchar(30) NOT NULL
+) ENGINE = InnoDB default CHARSET=utf8;
 
-insert into member (userName,passWord) values
+insert into member (userName,paswd) values
 ('guava','0507'),('banana','1234');

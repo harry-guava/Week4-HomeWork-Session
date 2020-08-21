@@ -1,39 +1,33 @@
 <?php
-require("connect.php");
 session_start();
 if (isset($_POST["btnOK"]))
- {
-  $_SESSION["userName"] = $_POST["txtUserName"];
-  $_SESSION["passWord"] = $_POST["txtPassword"];
+{
+  $userName = $_POST["txtUserName"];
+  $passWord = $_POST["txtPassword"];
+  if(trim($userName)!= "")
+  {
+  require_once("connect.php"); 
   $sql = <<< compare
-  select userName,passWord from member;
+  select * from member where userName = '$userName' and paswd = '$passWord'
   compare;
   $result = mysqli_query($link,$sql);
-  $row = mysqli_fetch_all($result);
-  var_dump($result);
-
+  $row =mysqli_num_rows($result);
+  //var_dump($result);
+  //var_dump($row);
+	 header(sprintf("Location: %s", $_SESSION["lastpage"]));
+	exit();
+  //header("location: secret.php");
+  //exit();
+  }
+}
 //     else
 //     {
 //              echo '<script language="javascript">';
 //              echo 'alert("請輸入正確的帳號或密碼")';
 //              echo '</script>'; 
 //     }
-//  }
-  // $userName = $_SESSION["userName"];
-  // $passWord = $_SESSION["passWord"];
-//   if (trim($_SESSION["userName"] != "") )
-//   {
-//    if (isset($_SESSION["lastpage"])) 
-//    {
-//       header(sprintf("Location: %s", $_SESSION["lastpage"]));
-//    } 
-//     else 
-//     {
-//      header("Location:index.php");
-//    }
-//     exit();
-//   }
- }
+
+ 
 if(isset($_POST["btnHome"]))
 {
   header("Location: index.php");
@@ -74,11 +68,13 @@ if(isset($_GET["logout"]))
       </tr>
       <tr>
         <td width="80" align="center" valign="baseline">帳號</td>
-        <td valign="baseline"><input type="text" name="txtUserName" id="txtUserName" /></td>
+        <td valign="baseline">
+        <input type="text" name="txtUserName" id="txtUserName" /></td>
       </tr>
       <tr>
         <td width="80" align="center" valign="baseline">密碼</td>
-        <td valign="baseline"><input type="password" name="txtPassword" id="txtPassword" /></td>
+        <td valign="baseline">
+        <input type="password" name="txtPassword" id="txtPassword" /></td>
       </tr>
       <tr>
         <td colspan="2" align="center" bgcolor="#CCCCCC">
