@@ -34,7 +34,7 @@ session_start();
 
   </tr>
   <tr>
-    <td align="center" bgcolor="#CCCCCC"><?php echo "Welcome! ".$_SESSION["userName"]?></td>
+    <td align="center" bgcolor="#CCCCCC"><?php echo "Welcome! ".$userName?></td>
   </tr>
 </table>
 

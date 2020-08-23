@@ -7,7 +7,7 @@
         if(trim(($auserName&&$apassWord)!=""))
         {
         $sql = <<< add
-        insert into member (userName,passWord) values ('$auserName','$apassWord');
+        insert into member (userName,paswd) values ('$auserName','$apassWord');
         add;
         require_once("connect.php");
         mysqli_query($link,$sql);

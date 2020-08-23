@@ -2,10 +2,11 @@
 session_start();
     if(!isset($_SESSION["userName"]))
     {
-      $_SEESION["lastpage"]="secret.php";
+      $_SESSION["lastpage"]="secret.php";
       header("Location: login.php");
       exit();
     }
+
 
 
 ?>
@@ -25,7 +26,10 @@ session_start();
     <td align="center" valign="baseline">This page for member only.</td>
   </tr>
   <tr>
-    <td align="center" bgcolor="#CCCCCC"><a href="index.php">回首頁</a></td>
+    <td align="center" bgcolor="#CCCCCC">
+      <a href="index.php">回首頁</a>
+    </td>
+    
   </tr>
 </table>
 

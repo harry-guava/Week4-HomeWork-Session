@@ -1,33 +1,50 @@
 <?php
-session_start();
+session_start(); 
 if (isset($_POST["btnOK"]))
 {
+  //require_once("connect.php");
   $userName = $_POST["txtUserName"];
   $passWord = $_POST["txtPassword"];
-  if(trim($userName)!= "")
-  {
-  require_once("connect.php"); 
-  $sql = <<< compare
-  select * from member where userName = '$userName' and paswd = '$passWord'
+  if(trim((($userName)&&($passWord))) != "")
+  { 
+  $_SESSION["userName"] = $userName;
+  $_SESSION["passWord"] = $passWord;
+  $sql = <<<compare
+  select * from member where `userName` = '$userName' and `paswd` = '$passWord'
   compare;
-  $result = mysqli_query($link,$sql);
+  require_once("connect.php");
+  mysqli_query($link,$sql);
+  //mysqli_query($link,$sql);
+  $result = mysqli_query($link, $sql);
   $row =mysqli_num_rows($result);
-  //var_dump($result);
-  //var_dump($row);
-	 header(sprintf("Location: %s", $_SESSION["lastpage"]));
-	exit();
-  //header("location: secret.php");
-  //exit();
+  }
+  else
+  {
+    echo '<script language="javascript">';
+    echo 'alert("欄位請勿空白")';
+    echo '</script>';
+  }
+  if($row != 0)
+  {
+    if(isset($_SESSION["lastpage"]))
+    {
+    header(sprintf("Location: %s", $_SESSION["lastpage"]));
+    exit();
+    }
+    else
+    {
+    header("Location: index.php");
+    }
+  }
+  else
+  {
+    echo '<script language="javascript">';
+    echo 'alert("請輸入正確的帳號或密碼")';
+    echo '</script>';
   }
 }
-//     else
-//     {
-//              echo '<script language="javascript">';
-//              echo 'alert("請輸入正確的帳號或密碼")';
-//              echo '</script>'; 
-//     }
 
- 
+
 if(isset($_POST["btnHome"]))
 {
   header("Location: index.php");
@@ -42,6 +59,7 @@ if(isset($_GET["logout"]))
     session_unset();
     session_destroy();
     header("location: index.php");
+    exit();
   
   }
 }
@@ -80,7 +98,7 @@ if(isset($_GET["logout"]))
         <td colspan="2" align="center" bgcolor="#CCCCCC">
          
           <input type="submit" name="btnOK" id="btnOK" value="登入" />
-          <input type="reset" name="btnReset" id="btnReset" value="重設" />
+          <!--<input type="reset" name="btnReset" id="btnReset" value="重設" />-->
           <input type="submit" name="btnHome" id="btnHome" value="回首頁" />
           <input href = "addEmployee.php" name = "btnAdd" type="submit" value ="加入會員"/>
         </td>
